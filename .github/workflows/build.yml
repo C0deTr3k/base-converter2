@@ -7,11 +7,17 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - uses: actions/checkout@v4
+      
+      - name: Set up Python
+        uses: actions/setup-python@v4
+        with:
+          python-version: '3.8'  
+
       - name: Build APK
         uses: digreatbrian/buildozer-action@v2
         with:
           buildozer-cmd: buildozer -v android debug
-          workdir: .  # Change this from work-dir to workdir
+          workdir: .  
 
       - name: Upload artifacts
         uses: actions/upload-artifact@v3
