@@ -1,26 +1,39 @@
+name: Build Kivy Android App
+
 on:
   push:
-    branches: [ main ]
+    branches:
+      - main  # Change this to your default branch if necessary
+  pull_request:
+    branches:
+      - main
 
 jobs:
   build:
     runs-on: ubuntu-latest
+
     steps:
-      - uses: actions/checkout@v4
-      
+      - name: Checkout code
+        uses: actions/checkout@v2
+
       - name: Set up Python
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v2
         with:
-          python-version: '3.8'  
+          python-version: '3.9'  # Specify the Python version you need
 
-      - name: Build APK
-        uses: digreatbrian/buildozer-action@v2
-        with:
-          buildozer-cmd: buildozer -v android debug
-          workdir: .  
+      - name: Install dependencies
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y python3-pip python3-setuptools python3-wheel
+          pip install buildozer
 
-      - name: Upload artifacts
-        uses: actions/upload-artifact@v3
+      - name: Build the app
+        run: |
+          cd frost_base_converter  # Change this to your project directory if needed
+          buildozer -v android debug  # Change 'debug' to 'release' for a production build
+
+      - name: Upload APK
+        uses: actions/upload-artifact@v2
         with:
-          name: package
-          path: ./bin/*.apk
+          name: frost_base_converter-apk
+          path: bin/*.apk  # Adjust if your APK is saved in a different location
