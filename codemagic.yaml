@@ -1,15 +1,16 @@
-
 workflows:
   default-workflow:
     name: Build Android APK
     environment:
-      flutter: stable  # Remove this if you are not using Flutter
+      python: 3.8  # You can use a specific Python version compatible with your project
     scripts:
+      - name: Install dependencies
+        script: |
+          pip install buildozer
+          pip install cython  # Install Cython
       - name: Build Android APK
         script: |
-          # Ensure Buildozer is installed
-          pip install buildozer
-          # Navigate to your project directory if necessary
           buildozer -v android debug
     artifacts:
       - bin/*.apk  # Update this based on where your APK is generated
+
