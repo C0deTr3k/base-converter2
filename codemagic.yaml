@@ -1,13 +1,10 @@
+
 workflows:
   default-workflow:
     name: Build Android APK
     environment:
-      # Note: Remove this if not needed for your specific configuration.
       flutter: stable  # Remove this if you are not using Flutter
     scripts:
-      - name: Install dependencies
-        script: |
-          pip install -r requirements.txt
       - name: Build Android APK
         script: |
           # Ensure Buildozer is installed
