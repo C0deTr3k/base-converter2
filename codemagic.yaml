@@ -1,0 +1,16 @@
+workflows:
+  default-workflow:
+    name: Build and test
+    environment:
+      python: 3.9
+      flutter: stable  # Kivy is not Flutter, but you can remove this line if not needed.
+    scripts:
+      - name: Install dependencies
+        script: |
+          pip install -r requirements.txt
+      - name: Build Android APK
+        script: |
+          # Build your Kivy application here.
+          buildozer -v android debug
+    artifacts:
+      - build/*.apk  # Adjust this based on your output path
