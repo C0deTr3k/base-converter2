@@ -1,39 +1,80 @@
-name: Build Kivy Android App
+name: 'Kivy App to APK'
+description: 'Convert Kivy app to APK'
+inputs:
+  python-version:
+    description: 'Python version to use'
+    default: '3.8'
+  workdir:
+    default: '.'
+    description: 'Working directory'
+  buildozer-cmd:
+    default: 'buildozer android debug'
+    description: 'Buildozer command to use'
 
-on:
-  push:
-    branches:
-      - main  # Change this to your default branch if necessary
-  pull_request:
-    branches:
-      - main
+# Add the branding section
+branding:
+  color: 'green'
+  icon: 'play'
 
-jobs:
-  build:
-    runs-on: ubuntu-latest
+runs:
+  using: "composite"
+  steps:
+    - name: Setup python
+      uses: actions/setup-python@v5
+      with:
+        architecture: x64
+        python-version: ${{ inputs.python-version }}
 
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v3  # Updated to v3
+    - name: Setup Java 17 required by Gradle
+      uses: actions/setup-java@v4
+      with:
+        distribution: 'temurin'  # or 'zulu','liberica', etc.
+        java-version: '17'
 
-      - name: Set up Python
-        uses: actions/setup-python@v4  # Updated to v4
-        with:
-          python-version: '3.9'  # Specify the Python version you need
+    - name: Set JAVA_HOME
+      run: |
+        echo "JAVA_HOME=$JAVA_HOME" >> $GITHUB_ENV
+      shell: bash
 
-      - name: Install dependencies
-        run: |
-          sudo apt-get update
-          sudo apt-get install -y python3-pip python3-setuptools python3-wheel
-          pip install buildozer
+    - name: Prepare virtual environment
+      run: |
+        python3 -m venv venv
+        source venv/bin/activate
+        echo "Using Python==$(python --version)"
+      shell: bash
+      
+    - name: Install and upgrade dependencies
+      run: |
+        sudo apt update
+        sudo apt install -y git \
+          zip \
+          unzip \
+          openjdk-17-jdk \
+          python3-pip \
+          autoconf \
+          libtool \
+          pkg-config \
+          zlib1g-dev \
+          libncurses5-dev \
+          libncursesw5-dev \
+          libtinfo5 \
+          cmake \
+          libffi-dev \
+          libssl-dev
+        export PATH=$PATH:~/.local/bin/
+        python3 -m pip install --upgrade \
+          Cython==0.29.33 \
+          buildozer
+      shell: bash
 
-      - name: Build the app
-        run: |
-          cd frost_base_converter  # Change this to your project directory if needed
-          buildozer -v android debug  # Change 'debug' to 'release' for a production build
+    - name: Install requirements in requirements.txt if it exists
+      run: |
+        if [ -f requirements.txt ]; then
+          python3 -m pip install -r requirements.txt
+        fi
+      shell: bash
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v3  # Kept v3 for upload artifact
-        with:
-          name: frost_base_converter-apk
-          path: frost_base_converter/bin/*.apk  # Adjust if your APK is saved in a different location
+    - name: Build with Buildozer
+      run: |
+        ${{ inputs.buildozer-cmd }}
+      shell: bash
