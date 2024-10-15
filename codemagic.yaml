@@ -1,10 +1,6 @@
 workflows:
   default-workflow:
     name: Build Android APK
-    environment:
-      android:
-        api_level: 30  # Specify the Android API level you want to target
-        target: android  # Specify the target platform
     scripts:
       - name: Install dependencies
         script: |
