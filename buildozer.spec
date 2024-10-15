@@ -6,10 +6,10 @@
 [app]
 
 # (str) Title of your application
-title = My Application
+title = Base_converter
 
 # (str) Package name
-package.name = myapp
+package.name = frost_converter
 
 # (str) Package domain (needed for android/ios packaging)
 package.domain = org.test
