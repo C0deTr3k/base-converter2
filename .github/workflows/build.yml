@@ -33,7 +33,7 @@ jobs:
           buildozer -v android debug  # Change 'debug' to 'release' for a production build
 
       - name: Upload APK
-        uses: actions/upload-artifact@v2
+        uses: actions/upload-artifact@v3  # Updated to v3
         with:
           name: frost_base_converter-apk
-          path: bin/*.apk  # Adjust if your APK is saved in a different location
+          path: frost_base_converter/bin/*.apk  # Adjust if your APK is saved in a different location
