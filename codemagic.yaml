@@ -3,7 +3,7 @@ workflows:
     name: Build and test
     environment:
       python: 3.9
-      flutter: stable  # Kivy is not Flutter, but you can remove this line if not needed.
+        # Kivy is not Flutter, but you can remove this line if not needed.
     scripts:
       - name: Install dependencies
         script: |
