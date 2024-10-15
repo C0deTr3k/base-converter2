@@ -2,7 +2,8 @@ workflows:
   default-workflow:
     name: Build Android APK
     environment:
-      python: 3.8  # You can use a specific Python version compatible with your project
+      # You can set the required version of the operating system, if necessary
+      # example: os: macos-latest
     scripts:
       - name: Install dependencies
         script: |
@@ -12,5 +13,6 @@ workflows:
         script: |
           buildozer -v android debug
     artifacts:
-      - bin/*.apk  # Update this based on where your APK is generated
+      - bin/*.apk  # Adjust this based on where your APK is generated
+
 
