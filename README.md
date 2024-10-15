@@ -24,7 +24,7 @@ Frost Converter is a user-friendly Kivy-based app for converting numbers between
 
  How to Run (Desktop Version)
 1. Clone the repository:  
-   `git clone https://github.com/yourusername/frost-converter-app.git`
+   `git clone https://github.com/frostAlpha/base-converter2.git`
 2. Install dependencies:  
    `pip install kivy`
 3. Run the app:  
