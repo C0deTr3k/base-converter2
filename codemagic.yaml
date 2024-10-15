@@ -2,8 +2,9 @@ workflows:
   default-workflow:
     name: Build Android APK
     environment:
-      # You can set the required version of the operating system, if necessary
-      # example: os: macos-latest
+      android:
+        api_level: 30  # Specify the Android API level you want to target
+        target: android  # Specify the target platform
     scripts:
       - name: Install dependencies
         script: |
