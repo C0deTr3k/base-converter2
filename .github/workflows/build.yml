@@ -14,10 +14,10 @@ jobs:
 
     steps:
       - name: Checkout code
-        uses: actions/checkout@v2
+        uses: actions/checkout@v3  # Updated to v3
 
       - name: Set up Python
-        uses: actions/setup-python@v2
+        uses: actions/setup-python@v4  # Updated to v4
         with:
           python-version: '3.9'  # Specify the Python version you need
 
@@ -33,7 +33,7 @@ jobs:
           buildozer -v android debug  # Change 'debug' to 'release' for a production build
 
       - name: Upload APK
-        uses: actions/upload-artifact@v3  # Updated to v3
+        uses: actions/upload-artifact@v3  # Kept v3 for upload artifact
         with:
           name: frost_base_converter-apk
           path: frost_base_converter/bin/*.apk  # Adjust if your APK is saved in a different location
