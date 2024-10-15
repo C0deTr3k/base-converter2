@@ -11,11 +11,10 @@ jobs:
         uses: digreatbrian/buildozer-action@v2
         with:
           buildozer-cmd: buildozer -v android debug
-          work-dir: . # directory where your main.py file rests
+          workdir: .  # Change this from work-dir to workdir
 
       - name: Upload artifacts
-        uses: actions/upload-artifact@v3  # Update this line
+        uses: actions/upload-artifact@v3
         with:
           name: package
           path: ./bin/*.apk
-
