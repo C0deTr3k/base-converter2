@@ -17,7 +17,7 @@ class ConverterApp(App):
 
         # Background image covering the entire window
         with self.layout.canvas.before:
-            self.background = Image(source='amazing spiderman.jpg', allow_stretch=True, keep_ratio=False)
+            self.background = Image(source='background.jpg', allow_stretch=True, keep_ratio=False)
             self.layout.bind(size=self.update_background)
 
         # GridLayout for the input and output section
